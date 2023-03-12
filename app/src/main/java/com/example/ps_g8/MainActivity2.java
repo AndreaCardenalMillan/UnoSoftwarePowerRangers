@@ -92,31 +92,32 @@ public class MainActivity2 extends AppCompatActivity{
         cv.put("id", id);
         if (c.moveToFirst()) {
             if (tipo == 1) {
+                cv.put("gusta", c.getInt(c.getColumnIndex("gusta")));
                 if (c.getInt(c.getColumnIndex("visto")) == 0) {
                     cv.put("visto", 1);
-                    cv.put("gusta", c.getInt(c.getColumnIndex("gusta")));
-                    BaseDatos.update("relacion", cv, "id =" + id + " and usuario =?", new String[]{getIntent().getExtras().getString("usuario")});
                     tgbtn.setImageResource(R.drawable.ic_baseline_remove_red_eye_24);
-                } else {
+                }
+                else {
                     cv.put("visto", 0);
-                    cv.put("gusta", c.getInt(c.getColumnIndex("gusta")));
-                    BaseDatos.update("relacion", cv, "id =" + id + " and usuario =?", new String[]{getIntent().getExtras().getString("usuario")});
                     tgbtn.setImageResource(R.drawable.ic_baseline_not_interested_24);
                 }
-            } else if (tipo == 0) {
+            }
+
+            else if (tipo == 0) {
+                cv.put("visto", c.getInt(c.getColumnIndex("visto")));
                 if (c.getInt(c.getColumnIndex("gusta")) == 0) {
                     cv.put("gusta", 1);
-                    cv.put("visto", c.getInt(c.getColumnIndex("visto")));
-                    BaseDatos.update("relacion", cv, "id =" + id + " and usuario =?", new String[]{getIntent().getExtras().getString("usuario")});
                     tgbtn.setImageResource(R.drawable.ic_baseline_favorite_24);
-                } else {
+                }
+                else {
                     cv.put("gusta", 0);
-                    cv.put("visto", c.getInt(c.getColumnIndex("visto")));
-                    BaseDatos.update("relacion", cv, "id =" + id + " and usuario =?", new String[]{getIntent().getExtras().getString("usuario")});
                     tgbtn.setImageResource(R.drawable.ic_baseline_favorite_border_24);
                 }
             }
+
+            BaseDatos.update("relacion", cv, "id =" + id + " and usuario =?", new String[]{getIntent().getExtras().getString("usuario")});
         }
+
         c.close();
         BaseDatos.close();
 
